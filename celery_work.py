@@ -1,7 +1,9 @@
+import os
 import datetime
 from celery import Celery
 
-app = Celery('celery_work', broker='pyamqp://guest@localhost//')
+rabbit_host = os.environ.get('RABBIT_HOST', 'localhost')
+app = Celery('celery_work', broker=f'pyamqp://guest@{rabbit_host}//')
 
 
 @app.on_after_configure.connect
